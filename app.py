@@ -5,10 +5,11 @@ app = Flask(__name__)
 
 # Database connection parameters
 db_config = {
-    'host': '34.126.101.73',
-    'user': 'host',
-    'database': 'Techterview101',
-    'port': '3306'
+    'host': 'your_vm_ip_or_hostname',
+    'user': 'your_mysql_username',
+    'password': 'your_mysql_password',
+    'database': 'your_database_name',
+    'port': '3306'  # default MySQL port
 }
 
 # Connect to MySQL database
