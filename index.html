@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Text Display</title>
+  <title>Global Prompt Display</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
-    <input type="text" id="textInput" placeholder="Enter text">
-    <button onclick="updateText()">Update Text</button>
-    <div id="displayContainer" class="box"></div>
+    <input type="text" id="promptInput" placeholder="Enter text">
+    <button onclick="sendPrompt()">Send Prompt</button>
   </div>
+
+  <div id="promptContainer" class="prompt-container"></div>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js"></script>
