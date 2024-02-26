@@ -1,16 +1,24 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCxXDMk1uZeEZ_pm1EWuVrOX1kNAT_k54E",
   authDomain: "slido-but-better-8a97f.firebaseapp.com",
   projectId: "slido-but-better-8a97f",
   storageBucket: "slido-but-better-8a97f.appspot.com",
   messagingSenderId: "848688924092",
-  appId: "1:848688924092:web:045ac9d52745d412d757b9",
-  measurementId: "G-Q88405WGR9"
+  appId: "1:848688924092:web:fb501866bd3d7586d757b9",
+  measurementId: "G-CQ0LBHPGY8"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Get a reference to the database service
 const database = firebase.database();
