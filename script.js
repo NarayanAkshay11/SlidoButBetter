@@ -1,40 +1,38 @@
-function addPrompt() {
-    var promptText = document.getElementById('promptInput').value;
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/add_prompt', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            // Prompt added successfully
-            getPrompts();
-        }
-    };
-    xhr.send('prompt=' + encodeURIComponent(promptText));
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Get a reference to the database service
+const database = firebase.database();
+
+function updateText() {
+  const textInput = document.getElementById('textInput');
+  const newText = textInput.value.trim();
+  
+  if (newText !== '') {
+    // Push text to Firebase database
+    database.ref('dynamicText').set(newText);
+  } else {
+    alert('Please enter some text.');
+  }
 }
 
-function getPrompts() {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/get_prompts', true);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            var prompts = JSON.parse(xhr.responseText);
-            displayPrompts(prompts);
-        }
-    };
-    xhr.send();
-}
-
-function displayPrompts(prompts) {
-    var promptContainer = document.getElementById('promptContainer');
-    promptContainer.innerHTML = ''; // Clear previous prompts
-    prompts.forEach(function(prompt) {
-        var promptBox = document.createElement('div');
-        promptBox.className = 'prompt-box';
-        promptBox.textContent = prompt.text;
-        promptContainer.appendChild(promptBox);
-    });
-}
-
-// Fetch prompts initially and set up interval for continuous updates
-getPrompts();
-setInterval(getPrompts, 2000); // Update every 2 seconds
+// Listen for changes in the Firebase database and update the display accordingly
+database.ref('dynamicText').on('value', function(snapshot) {
+  const displayContainer = document.getElementById('displayContainer');
+  const newText = snapshot.val();
+  if (newText) {
+    displayContainer.textContent = newText;
+  } else {
+    displayContainer.textContent = 'No text entered';
+  }
+});
