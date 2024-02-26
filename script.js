@@ -17,31 +17,29 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
 
 // Get a reference to the database service
 const database = firebase.database();
 
-function updateText() {
-  const textInput = document.getElementById('textInput');
-  const newText = textInput.value.trim();
-  
-  if (newText !== '') {
-    // Push text to Firebase database
-    database.ref('dynamicText').set(newText);
-  } else {
-    alert('Please enter some text.');
+// Function to send prompt to Firebase
+function sendPrompt() {
+  const promptInput = document.getElementById('promptInput');
+  const prompt = promptInput.value.trim();
+
+  if (prompt !== '') {
+    // Push prompt to Firebase database
+    database.ref('prompts').push(prompt);
+    promptInput.value = ''; // Clear input after sending prompt
   }
 }
 
-// Listen for changes in the Firebase database and update the display accordingly
-database.ref('dynamicText').on('value', function(snapshot) {
-  const displayContainer = document.getElementById('displayContainer');
-  const newText = snapshot.val();
-  if (newText) {
-    displayContainer.textContent = newText;
-  } else {
-    displayContainer.textContent = 'No text entered';
-  }
+// Listen for new prompts added to Firebase and display them
+database.ref('prompts').on('child_added', function(snapshot) {
+  const promptContainer = document.getElementById('promptContainer');
+  const prompt = snapshot.val();
+  const promptBox = document.createElement('div');
+  promptBox.className = 'prompt-box';
+  promptBox.textContent = prompt;
+  promptContainer.appendChild(promptBox);
 });
