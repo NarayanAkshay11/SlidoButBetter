@@ -1,11 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCxXDMk1uZeEZ_pm1EWuVrOX1kNAT_k54E",
   authDomain: "slido-but-better-8a97f.firebaseapp.com",
@@ -15,7 +11,6 @@ const firebaseConfig = {
   appId: "1:848688924092:web:fb501866bd3d7586d757b9",
   measurementId: "G-CQ0LBHPGY8"
 };
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
@@ -34,12 +29,29 @@ function sendPrompt() {
   }
 }
 
+// Function to display prompts
+function displayPrompts() {
+  const promptContainer = document.getElementById('promptContainer');
+  
+  // Clear previous prompts
+  promptContainer.innerHTML = '';
+
+  // Retrieve prompts from Firebase and display them
+  database.ref('prompts').once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      const prompt = childSnapshot.val();
+      const promptBox = document.createElement('div');
+      promptBox.className = 'prompt-box';
+      promptBox.textContent = prompt;
+      promptContainer.appendChild(promptBox);
+    });
+  });
+}
+
+// Display existing prompts on page load
+displayPrompts();
+
 // Listen for new prompts added to Firebase and display them
 database.ref('prompts').on('child_added', function(snapshot) {
-  const promptContainer = document.getElementById('promptContainer');
-  const prompt = snapshot.val();
-  const promptBox = document.createElement('div');
-  promptBox.className = 'prompt-box';
-  promptBox.textContent = prompt;
-  promptContainer.appendChild(promptBox);
+  displayPrompts();
 });
