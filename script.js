@@ -1,12 +1,13 @@
-// Initialize Firebase
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
+  apiKey: "AIzaSyCxXDMk1uZeEZ_pm1EWuVrOX1kNAT_k54E",
+  authDomain: "slido-but-better-8a97f.firebaseapp.com",
+  projectId: "slido-but-better-8a97f",
+  storageBucket: "slido-but-better-8a97f.appspot.com",
+  messagingSenderId: "848688924092",
+  appId: "1:848688924092:web:045ac9d52745d412d757b9",
+  measurementId: "G-Q88405WGR9"
 };
 
 firebase.initializeApp(firebaseConfig);
